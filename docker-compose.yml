@@ -1,7 +1,7 @@
 version: '2'
-services:
 
-  nginx:
+services:
+   nginx:
     image: nginx:1.9
     container_name: ci_nginx
     ports:
@@ -17,20 +17,20 @@ services:
     links:
      - jenkins:jenkins
      - nexus:nexus
-  jenkins:
+   jenkins:
     image: jenkins:2.0-beta-1
     container_name: ci_jenkins
     depends_on:
      - jenkins_data
     links:
      -  postgresql4tests:postgresql4tests
-  jenkins_data:
+   jenkins_data:
     image: busybox:1.24
     container_name: ci_jenkins_data
     volumes:
      - ci_jenkins_data_dir:/var/jenkins_home
     entrypoint: /bin/adduser -D -h /var/jenkins_home jenkins
-  nexus:
+   nexus:
     image: sonatype/nexus3:3.0.0
     container_name: ci_nexus
     volumes:
@@ -46,3 +46,4 @@ volumes:
   ci_nexus_data_dir:
   ci_nginx_log_dir:
   ci_postgresql4test_data_dir:
+

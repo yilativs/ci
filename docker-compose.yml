@@ -1,0 +1,48 @@
+version: '2'
+services:
+
+  nginx:
+    image: nginx:1.9
+    container_name: ci_nginx
+    ports:
+     - "443:443"
+     - "80:80"
+    volumes:
+     - ./nginx/etc/nginx/crypt:/etc/nginx/crypt
+     - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
+     - ci_nginx_log_dir:/var/log/nginx
+    depends_on:
+     - jenkins
+     - nexus
+    links:
+     - jenkins:jenkins
+     - nexus:nexus
+  jenkins:
+    image: jenkins:2.0-beta-1
+    container_name: ci_jenkins
+    depends_on:
+     - jenkins_data
+    links:
+     -  postgresql4tests:postgresql4tests
+  jenkins_data:
+    image: busybox:1.24
+    container_name: ci_jenkins_data
+    volumes:
+     - ci_jenkins_data_dir:/var/jenkins_home
+    entrypoint: /bin/adduser -D -h /var/jenkins_home jenkins
+  nexus:
+    image: sonatype/nexus3:3.0.0
+    container_name: ci_nexus
+    volumes:
+     - ci_nexus_data_dir:/nexus-data
+   postgresql4tests:
+    image : postgres:9.5
+    container_name: ci_postgresql4test
+    volumes :
+     - ci_postgresql4test_data_dir:/var/lib/postgresql/data
+
+volumes:
+  ci_jenkins_data_dir:
+  ci_nexus_data_dir:
+  ci_nginx_log_dir:
+  ci_postgresql4test_data_dir:

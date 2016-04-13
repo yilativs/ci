@@ -1,0 +1,3 @@
+nginx/var/log/**
+nginx/etc/nginx/crypt/*
+jenkins/var/jenkins_home/logs

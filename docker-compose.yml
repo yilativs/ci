@@ -23,7 +23,8 @@ services:
     depends_on:
      - jenkins_data
     links:
-     -  postgresql4tests:postgresql4tests
+     - postgresql4tests:postgresql4tests
+     - nexus:nexus
    jenkins_data:
     image: busybox:1.24
     container_name: ci_jenkins_data

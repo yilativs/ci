@@ -18,7 +18,7 @@ services:
      - jenkins:jenkins
      - nexus:nexus
    jenkins:
-    image: jenkins:2.0-beta-2
+    image: jenkins:2.3
     container_name: ci_jenkins
     environment:
      - JAVA_OPTS=-Xms256m -Xmx256m

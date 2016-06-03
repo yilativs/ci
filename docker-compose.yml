@@ -17,13 +17,19 @@ services:
     links:
      - jenkins:jenkins
      - nexus:nexus
+     
+#docker exec -it jenkins_test cat /var/jenkins_home/secrets/initialAdminPassword
    jenkins:
-    image: jenkins:2.3
+    image: jenkins:latest
     container_name: ci_jenkins
+    ports:
+     - "8080:8080"
+     - "8443:8443"
     environment:
      - JAVA_OPTS=-Xms256m -Xmx256m
+     - JENKINS_OPTS=--httpPort=8080 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/ssl/server.crt --httpsPrivateKey=/var/jenkins_home/ssl/server.key
     volumes:
-     - ci_jenkins_data_dir:/var/jenkins_home
+     - ./jenkins/var/jenkins_home:/var/jenkins_home
     links:
      - postgresql4tests:postgresql4tests
      - nexus:nexus
@@ -48,4 +54,3 @@ volumes:
   ci_nexus_data_dir:
   ci_nginx_log_dir:
   ci_postgresql4test_data_dir:
-

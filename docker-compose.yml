@@ -2,20 +2,21 @@ version: '2'
 
 services:
    nginx:
-    image: nginx:1.9
+    #build: ./nginx
+    image: nginx:1.10.1
     container_name: ci_nginx
     ports:
      - "443:443"
      - "80:80"
     volumes:
-     - ./nginx/etc/nginx/crypt:/etc/nginx/crypt
+     - ./nginx/etc/nginx/ssl:/etc/nginx/ssl
      - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
      - ci_nginx_log_dir:/var/log/nginx
     depends_on:
      - jenkins
      - nexus
     links:
-     - jenkins:jenkins
+     - jenkins:jenkins.dev.intranet
      - nexus:nexus
 
 #docker exec -it jenkins_test cat /var/jenkins_home/secrets/initialAdminPassword

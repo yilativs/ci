@@ -17,7 +17,7 @@ services:
      - nexus
     links:
      - jenkins:jenkins.dev.intranet
-     - nexus:nexus
+     - nexus:nexus.dev.intranet
 
 #docker exec -it jenkins_test cat /var/jenkins_home/secrets/initialAdminPassword
    jenkins:
@@ -34,15 +34,18 @@ services:
      - ./jenkins/var/jenkins_home/ssl:/var/jenkins_home/ssl
     links:
      - postgresql4tests:postgresql4tests
-     - nexus:nexus
+     - nexus:nexus.dev.intranet
+
    nexus:
-    image: sonatype/nexus3:3.0.0
+    build: ./nexus
+    #image: sonatype/nexus3:3.0.0
     container_name: ci_nexus
     environment:
      - JAVA_MAX_MEM=-Xmx256m
      - JAVA_MIN_MEM=-Xms256m
     volumes:
-     - ci_nexus_data_dir:/nexus-data
+     #- ci_nexus_data_dir:/nexus-data
+     - ci_nexus_data_dir:/usr/local/share/nexus/data
    postgresql4tests:
     image : postgres:9.5
     container_name: ci_postgresql4test

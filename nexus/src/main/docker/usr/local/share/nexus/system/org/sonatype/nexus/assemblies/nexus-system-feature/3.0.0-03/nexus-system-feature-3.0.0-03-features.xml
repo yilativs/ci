@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="nexus-system-feature">
+    <feature name="nexus-system-feature" description="org.sonatype.nexus.assemblies:nexus-system-feature" version="3.0.0.03">
+        <details>org.sonatype.nexus.assemblies:nexus-system-feature</details>
+        <bundle start-level="8">mvn:org.sonatype.nexus/nexus-pax-logging/3.0.0-03</bundle>
+        <bundle start-level="8">mvn:com.codahale.metrics/metrics-logback/3.0.2</bundle>
+        <bundle start-level="8">mvn:com.codahale.metrics/metrics-core/3.0.2</bundle>
+        <bundle start-level="8">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/1_2</bundle>
+        <bundle start-level="8">mvn:net.java.dev.jna/jna/4.0.0</bundle>
+    </feature>
+</features>

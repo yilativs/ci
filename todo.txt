@@ -1,7 +1,8 @@
 check upload jar to nexus
-check upload docker image to nexus
 install ca certificate to jenkins
 setup number of executors in jenkins to 1: see
 setup number required plugins for jenkins. see https://hub.docker.com/_/jenkins/
 setup java, maven, git in jenkins
+
+create pushing to nexus from master branch (commit snapshot to nexus on each commit)
 create pushing to nexus from release branch (release branch takes from pre release wich is done on developer's pc)

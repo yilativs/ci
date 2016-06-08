@@ -33,8 +33,10 @@ services:
      - ci_jenkins_data_dir:/var/jenkins_home
      - ./jenkins/var/jenkins_home/ssl:/var/jenkins_home/ssl
     links:
-     - postgresql4tests:postgresql4tests
+     #- postgresql4tests:postgresql4tests
      - nexus:nexus.dev.intranet
+     - nexus:nexus-snapshots.dev.intranet
+     - nexus:nexus-releases.dev.intranet
 
    nexus:
     build: ./nexus

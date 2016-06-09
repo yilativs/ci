@@ -24,9 +24,9 @@ services:
     #image: jenkins:latest
     build: ./jenkins
     container_name: ci_jenkins
-    ports:
-     - "8080:8080"
-     - "8443:8443"
+#    ports:
+#     - "8080:8080"
+#     - "8443:8443"
     environment:
     # an ugly hack to run docker from a host machine in jenkins container ubuntu 14.04
      - LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/local/lib/x86_64-linux-gnu:/opt/lib/x86_64-linux-gnu

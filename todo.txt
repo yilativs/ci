@@ -6,3 +6,8 @@ setup java, maven, git in jenkins
 
 create pushing to nexus from master branch (commit snapshot to nexus on each commit)
 create pushing to nexus from release branch (release branch takes from pre release wich is done on developer's pc)
+
+test 80 port redirection to 443 for jenkins
+test 80 port redirection to 443 for nexus
+
+renama ca.crt to intranet-ca.crt

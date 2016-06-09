@@ -21,17 +21,27 @@ services:
 
 #docker exec -it jenkins_test cat /var/jenkins_home/secrets/initialAdminPassword
    jenkins:
-    image: jenkins:latest
+    #image: jenkins:latest
+    build: ./jenkins
     container_name: ci_jenkins
     ports:
      - "8080:8080"
      - "8443:8443"
     environment:
-     - JAVA_OPTS=-Xms256m -Xmx256m
-     - JENKINS_OPTS=--httpPort=8080 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/ssl/server.crt --httpsPrivateKey=/var/jenkins_home/ssl/server.key
+    # an ugly hack to run docker from a host machine in jenkins container ubuntu 14.04
+     - LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/local/lib/x86_64-linux-gnu:/opt/lib/x86_64-linux-gnu
+     - JAVA_OPTS=-Xms256m -Xmx512m
+     - JENKINS_OPTS=--httpPort=8080 --httpsPort=8443 --httpsCertificate=/etc/ssl/certs/server.crt --httpsPrivateKey=/etc/ssl/private/server.key
     volumes:
      - ci_jenkins_data_dir:/var/jenkins_home
-     - ./jenkins/var/jenkins_home/ssl:/var/jenkins_home/ssl
+      #- ./jenkins/src/main/docker/var/jenkins_home/ssl:/var/jenkins_home/ssl
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /usr/bin/docker:/usr/bin/docker #should point to where $(whick docker) points
+     # an ugly hack to run docker from a host machine in jenkins container on ubuntu 14.04
+     - /usr/lib/x86_64-linux-gnu:/usr/local/lib/x86_64-linux-gnu
+     - /lib/x86_64-linux-gnu:/opt/lib/x86_64-linux-gnu
+
+
     links:
      #- postgresql4tests:postgresql4tests
      - nexus:nexus.dev.intranet
@@ -48,16 +58,17 @@ services:
     volumes:
      #- ci_nexus_data_dir:/nexus-data
      - ci_nexus_data_dir:/usr/local/share/nexus/data
-   postgresql4tests:
-    image : postgres:9.5
-    container_name: ci_postgresql4test
-    environment:
-     - POSTGRES_PASSWORD=postgresqlPassword
-    volumes :
-     - ci_postgresql4test_data_dir:/var/lib/postgresql/data
+
+   #postgresql4tests:
+    #image : postgres:9.5
+    #container_name: ci_postgresql4test
+    #environment:
+     #- POSTGRES_PASSWORD=postgresqlPassword
+    #volumes :
+     #- ci_postgresql4test_data_dir:/var/lib/postgresql/data
 
 volumes:
   ci_jenkins_data_dir:
   ci_nexus_data_dir:
   ci_nginx_log_dir:
-  ci_postgresql4test_data_dir:
+  #ci_postgresql4test_data_dir:

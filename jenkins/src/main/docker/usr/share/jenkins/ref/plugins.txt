@@ -1,0 +1,5 @@
+credentials:latest
+maven-plugin:latest
+scm-api:latest
+git-client:latest
+git:latest
